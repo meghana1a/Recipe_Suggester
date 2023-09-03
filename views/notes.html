@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Your Notes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            background-image: url("https://wallpaperaccess.com/full/112620.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 1;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .notes-container {
+            padding: 20px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            resize: none;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .btn-container {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        .file-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        .file-label {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #2196F3;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .file-label:hover {
+            background-color: #0f6ac0;
+        }
+        
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        
+        nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        nav li {
+            float: left;
+        }
+        
+        nav li a {
+            display: block;
+            color: rgb(223, 216, 216);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        nav li a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
+</head>
+
+<body ng-controller="NotesController">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/home" ng-click="changePage('home.html')">Home</a></li>
+                <li><a href="/about" ng-click="changePage('about.html')">About</a></li>
+                <li><a href="/sign" ng-click="changePage('sign.html')">Newsletter</a></li>
+                <li><a href="/contact" ng-click="changePage('contact.html')">Contact</a></li>
+                <li><a href="/rotd" ng-click="changePage('rotd.html')">ROTD</a></li>
+                <li><a href="/notes" ng-click="changePage('notes.html')">Your Notes</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Your Notes</h1>
+
+    <div class="container">
+        <div class="notes-container">
+            <textarea ng-model="textData" placeholder="Write your notes here..."></textarea>
+        </div>
+
+        <div class="btn-container">
+            <button ng-click="saveFile()" ng-show="textData.length > 0 && !fileSaved">Save</button>
+            <button ng-click="copyText()" ng-show="textData.length > 0">Copy</button>
+            <button ng-click="clearText()" ng-show="textData.length > 0">Clear</button>
+        </div>
+
+        <div class="file-container">
+            <input type="file" id="fileInput" accept=".txt" ng-model="selectedFile" ng-change="readFile()">
+            <label class="file-label" for="fileInput">Open File</label>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.controller('NotesController', function($scope) {
+            $scope.textData = '';
+            $scope.fileSaved = false;
+
+            $scope.saveFile = function() {
+                var blob = new Blob([$scope.textData], {
+                    type: 'text/plain'
+                });
+
+                var url = window.URL.createObjectURL(blob);
+
+                var filename = 'notes.txt';
+
+                var anchor = document.createElement('a');
+                anchor.href = url;
+                anchor.download = filename;
+                anchor.click();
+
+                $scope.fileSaved = true;
+            };
+
+            $scope.copyText = function() {
+                navigator.permissions.query({
+                    name: 'clipboard-write'
+                }).then(function(result) {
+                    if (result.state === 'granted' || result.state === 'prompt') {
+                        navigator.clipboard.writeText($scope.textData).then(function() {
+                            alert('Text copied to clipboard!');
+                        });
+                    }
+                });
+            };
+
+            $scope.clearText = function() {
+                $scope.textData = '';
+                $scope.fileSaved = false;
+            };
+
+            $scope.readFile = function() {
+                var file = $scope.selectedFile;
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    $scope.$apply(function() {
+                        $scope.textData = event.target.result;
+                    });
+                };
+
+                reader.readAsText(file);
+            };
+        });
+    </script>
+</body>
+
+</html>

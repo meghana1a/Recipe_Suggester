@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe of the Day</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <style>
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+            padding: 20px;
+        }
+        
+        body {
+            background-color: bisque;
+        }
+        
+        .layout1 {
+            background-color: lightblue;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        button {
+            background-color: #e681a6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .box {
+            width: 48%;
+            background-color: #ffd3d9;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .section-title {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        .note {
+            color: #777;
+            font-style: italic;
+            margin-top: 20px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+        }
+        
+        .grid-layout {
+            display: grid;
+        }
+        
+        .normal-layout {
+            display: block;
+        }
+        
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        
+        nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        nav li {
+            float: left;
+        }
+        
+        nav li a {
+            display: block;
+            color: rgb(223, 216, 216);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        nav li a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
+</head>
+
+<body ng-controller="MyController">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/home" ng-click="changePage('home.html')">Home</a></li>
+                <li><a href="/about" ng-click="changePage('about.html')">About</a></li>
+                <li><a href="/sign" ng-click="changePage('sign.html')">Newsletter</a></li>
+                <li><a href="/contact" ng-click="changePage('contact.html')">Contact</a></li>
+                <li><a href="/rotd" ng-click="changePage('rotd.html')">ROTD</a></li>
+                <li><a href="/notes" ng-click="changePage('notes.html')">Your Notes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <button ng-click="toggleLayout()">Toggle Layout</button>
+
+    <div class="container" ng-class="layoutClass">
+        <div ng-show="layout === 'layout1'" class="layout1">
+            <a href="https://www.eggs.ca/recipes/healthy-ramen-bowls">
+                <h1>Healthy Ramen Bowl Recipe</h1>
+            </a>
+            <center><img src="https://media.eggs.ca/assets/RecipeThumbs/Healthy-Ramen-Topped-with-Boiled-Egg-1280x720.jpg" height="200"></center>
+            <div class="ingredients">
+                <h2>Ingredients:</h2>
+                <ul>
+                    <li class="ingredient">4 cups low-sodium chicken or vegetable broth</li>
+                    <li class="ingredient">2 cups water</li>
+                    <li class="ingredient">2 cloves garlic, minced</li>
+                    <li class="ingredient">1 tablespoon grated fresh ginger</li>
+                    <li class="ingredient">2 tablespoons reduced-sodium soy sauce</li>
+                    <li class="ingredient">2 tablespoons rice vinegar</li>
+                    <li class="ingredient">1 tablespoon sesame oil</li>
+                    <li class="ingredient">2 cups sliced mixed mushrooms (such as shiitake, cremini, and oyster)</li>
+                    <li class="ingredient">2 cups baby spinach</li>
+                    <li class="ingredient">2 green onions, sliced</li>
+                    <li class="ingredient">4 large eggs</li>
+                    <li class="ingredient">4 servings ramen noodles</li>
+                    <li class="ingredient">1/4 cup chopped fresh cilantro</li>
+                    <li class="ingredient">1 tablespoon toasted sesame seeds</li>
+                    <li class="ingredient">1 teaspoon Sriracha sauce (optional)</li>
+                </ul>
+            </div>
+
+            <div class="instructions">
+                <h2>Instructions:</h2>
+                <ol>
+                    <li>In a large pot, combine the chicken or vegetable broth, water, garlic, ginger, soy sauce, rice vinegar, and sesame oil. Bring to a boil.</li>
+                    <li>Add the sliced mushrooms to the pot and simmer for 5 minutes.</li>
+                    <li>Meanwhile, bring a separate pot of water to a boil. Carefully add the eggs and cook for 7 minutes for slightly soft centers or 9 minutes for firmer yolks. Transfer the eggs to a bowl of ice water to cool, then peel and halve them.
+                    </li>
+                    <li>Cook the ramen noodles according to package instructions. Drain and rinse under cold water.</li>
+                    <li>To serve, divide the cooked ramen noodles among 4 bowls. Ladle the broth and mushrooms over the noodles. Top with baby spinach, sliced green onions, halved eggs, chopped cilantro, toasted sesame seeds, and Sriracha sauce (if desired).
+                    </li>
+                    <li>Enjoy your healthy ramen bowls!</li>
+                </ol>
+            </div>
+            <br>
+            <p class="note">Note: Feel free to customize this recipe by adding additional vegetables, proteins, or toppings to suit your taste.</p>
+
+        </div>
+
+        <!-- Layout 2 -->
+        <div ng-show="layout === 'layout1'" class="layout1">
+            <a href="https://www.eggs.ca/recipes/anda-burger-masala-fried-egg-burger">
+                <h1>Healthy Egg Burger</h1>
+                <a>
+                    <center><img src="https://media.eggs.ca/assets/RecipeThumbs/_resampled/FillWyIxMjgwIiwiNzIwIl0/Masala-Fried-Egg-Burger-Anda-Burger-CMS.jpg" height="200"></center>
+                    <div class="ingredients">
+                        <h2>Ingredients:</h2>
+                        <ul>
+                            <li class="ingredient">4 eggs</li>
+                            <li class="ingredient">4 burger buns</li>
+                            <li class="ingredient">1/2 cup finely chopped onion</li>
+                            <li class="ingredient">1/2 cup finely chopped tomato</li>
+                            <li class="ingredient">1/4 cup finely chopped coriander leaves</li>
+                            <li class="ingredient">1 teaspoon ginger-garlic paste</li>
+                            <li class="ingredient">1/2 teaspoon red chili powder</li>
+                            <li class="ingredient">1/2 teaspoon turmeric powder</li>
+                            <li class="ingredient">1/2 teaspoon garam masala</li>
+                            <li class="ingredient">1/2 teaspoon chaat masala</li>
+                            <li class="ingredient">Salt to taste</li>
+                            <li class="ingredient">Oil for frying</li>
+                            <li class="ingredient">Butter or mayonnaise for spreading</li>
+                        </ul>
+                    </div>
+
+                    <div class="instructions">
+                        <h2>Instructions:</h2>
+                        <ol>
+
+                            <li>In a bowl, beat the eggs. Add finely chopped onion, tomato, coriander leaves, ginger-garlic paste, red chili powder, turmeric powder, garam masala, chaat masala, and salt. Mix well to combine.</li>
+                            <li>Heat oil in a pan. Pour a portion of the egg mixture in the pan to make a round-shaped omelette. Cook on both sides until golden brown. Repeat with the remaining egg mixture to make 4 omelettes.</li>
+                            <li>Toast the burger buns lightly on a pan or toaster.</li>
+                            <li>Spread butter or mayonnaise on the toasted buns.</li>
+                            <li>Place an omelette on the bottom half of each bun.</li>
+                            <li>Cover with the top half of the bun.</li>
+                            <li>Your Anda Burger Masala Fried Egg Burger is ready to serve.</li>
+                        </ol>
+
+                    </div>
+                    <br>
+                    <p class="note">Note: You can add additional toppings such as lettuce</p>
+
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.controller('MyController', function($scope) {
+            $scope.layout = 'layout1'; // Set the initial layout value
+            $scope.currentPage = 'rotd.html'; // Set the initial page
+            $scope.layoutClass = 'grid-layout'; // Set the initial layout class
+
+            $scope.toggleLayout = function() {
+                $scope.layoutClass = ($scope.layoutClass === 'grid-layout') ? 'normal-layout' : 'grid-layout'; // Toggle layout class
+            };
+        });
+    </script>
+</body>
+
+</html>

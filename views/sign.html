@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sign Up / Log In Form</title>
+    <link rel="stylesheet" id="css-link" href="public/login1.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular-route.min.js"></script>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/home" ng-click="changePage('home.html')">Home</a></li>
+                <li><a href="/about" ng-click="changePage('about.html')">About</a></li>
+                <li><a href="/sign" ng-click="changePage('sign.html')">Newsletter</a></li>
+                <li><a href="/contact" ng-click="changePage('contact.html')">Contact</a></li>
+                <li><a href="/rotd" ng-click="changePage('rotd.html')">ROTD</a></li>
+                <li><a href="/notes" ng-click="changePage('notes.html')">Your Notes</a></li>
+            </ul>
+        </nav>
+    </header>
+</head>
+
+<body ng-app="myApp" ng-controller="MyController">
+    <!--<header>
+        <nav>
+            <ul>
+                <li><a href="#/home">Home</a></li>
+                <li><a href="#/about">About</a></li>
+                <li><a href="#/signup">Sign up</a></li>
+                <li><a href="#/contact">Contact</a></li>
+                <li><a href="#/rotd">ROTD</a></li>
+            </ul>
+        </nav>
+    </header>-->
+    <div ng-view></div>
+
+    <h1>Sign Up - Log In Form</h1>
+
+    <div class="toggle-buttons">
+        <button onclick="showSignUpForm()">Sign Up</button>
+        <button onclick="showLogInForm()">Log In</button>
+    </div>
+
+    <form id="signup-form" ng-show="currentPage === 'signup.html'" ng-submit="submitForm(event)">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div id="additional-fields">
+            <!-- Additional sign-up fields here -->
+        </div>
+
+        <button type="submit">Sign Up</button>
+
+    </form>
+
+    <form id="login-form" ng-show="currentPage !== 'signup.html'" ng-submit="submitForm(event)">
+        <div class="form-group">
+            <label for="login-email">Email:</label>
+            <input type="email" id="login-email" name="login-email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" name="login-password" required>
+        </div>
+        <button type="submit">Log In</button>
+
+    </form>
+
+    <center><button onclick="toggleCSS()">Change mode</button>
+    </center>
+
+    <script>
+        function showSignUpForm() {
+            document.getElementById('signup-form').style.display = 'block';
+            document.getElementById('login-form').style.display = 'none';
+        }
+
+        function showLogInForm() {
+            document.getElementById('signup-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        }
+
+        function submitForm(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Perform form validation and submission logic based on the active form
+            if (document.getElementById('signup-form').style.display === 'block') {
+                // Sign up form is active
+                var username = document.getElementById('username').value;
+                var email = document.getElementById('email').value;
+                var password = document.getElementById('password').value;
+
+                // Additional fields specific to your sign-up form
+                var additionalFields = {
+                    // Add your additional field values here
+                };
+
+                // Perform sign-up form validation and submission
+                // ... your code here ...
+
+                // Example: Display submitted sign-up data
+                console.log('Sign Up - Username:', username);
+                console.log('Sign Up - Email:', email);
+                console.log('Sign Up - Password:', password);
+                console.log('Sign Up - Additional Fields:', additionalFields);
+            } else {
+                // Log in form is active
+                var loginEmail = document.getElementById('loginEmail').value;
+                var loginPassword = document.getElementById('login-password').value;
+                console.log('Log In - Email:', loginEmail);
+                console.log('Log In - Password:', loginPassword);
+            }
+        }
+
+        var originalCSS = 'public/login1.css';
+
+        function toggleCSS() {
+            var cssLink = document.getElementById('css-link');
+            if (cssLink.href.includes(originalCSS)) {
+                cssLink.href = (originalCSS === 'public/login1.css') ? 'public/login2.css' : 'public/login1.css';
+            } else {
+                cssLink.href = originalCSS;
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+
+    <style>
+        body {
+            background-image: url("https://wallpaper.dog/large/10839689.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        
+        .content {
+            max-width: 1100px;
+            margin-left: 40px;
+        }
+        
+        p,
+        ol {
+            font-size: 18px;
+            line-height: 1.5;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        
+        nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        nav li {
+            float: left;
+        }
+        
+        nav li a {
+            display: block;
+            color: rgb(223, 216, 216);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        nav li a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        #video-player {
+            width: 500px;
+            height: 300px;
+        }
+        
+        .controls {
+            margin-top: 20px;
+        }
+        
+        button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body ng-controller="VideoController">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/home" ng-click="changePage('home.html')">Home</a></li>
+                <li><a href="/about" ng-click="changePage('about.html')">About</a></li>
+                <li><a href="/sign" ng-click="changePage('sign.html')">Newsletter</a></li>
+                <li><a href="/contact" ng-click="changePage('contact.html')">Contact</a></li>
+                <li><a href="/rotd" ng-click="changePage('rotd.html')">ROTD</a></li>
+                <li><a href="/notes" ng-click="changePage('notes.html')">Your Notes</a></li>
+            </ul>
+        </nav>
+    </header>
+    <br>
+    <h1 align="center" style="font-size: 36px;">About Food Generator</h1>
+    <main class="content">
+        <p>Food Generator is a free web-based tool that helps you discover new and exciting meal ideas. Whether you're a picky eater or just looking for something new, our food generator can help you find delicious and easy-to-make meals that suit your taste.</p>
+
+        <i><h2 style="font-size: 28px; margin-top: 40px;">How it works</h2></i>
+        <p>Using Food Generator is simple:</p>
+        <ol>
+            <li>Choose your ingredients and preferences</li>
+            <li>Click the "Generate" button to get a list of meal ideas</li>
+            <li>Select a meal idea to see the recipe and instructions</li>
+            <li>Enjoy your delicious meal!</li>
+        </ol>
+
+        <i><h2 style="font-size: 28px; margin-top: 40px;">Our Mission</h2></i>
+        <p>Our mission at Food Generator is to make meal planning and cooking easier and more enjoyable for everyone. We believe that everyone should have access to healthy and tasty meal options, regardless of their cooking skills or dietary restrictions.</p>
+    </main>
+    <br>
+
+    <center>
+        <div class="container">
+            <button ng-click="toggleVideo()">Toggle Video</button>
+            <br><br>
+            <div id="video-container" style="display: none;">
+                <video id="video-player" controls>
+                    <source src="C:\Users\megha\OneDrive\web\public\images\Knife.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="controls">
+                <button ng-click="skip(-5)">Skip (-5s)</button>
+                <button ng-click="skip(5)">Skip (+5s)</button>
+                <button ng-click="pauseVid()">Pause</button>
+                <button ng-click="playVid()">Play</button>
+                <button ng-click="restart()">Restart</button>
+            </div>
+        </div>
+    </center>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('VideoController', function($scope) {
+            var videoPlayer = document.getElementById('video-player');
+            var videoContainer = document.getElementById('video-container');
+
+            $scope.toggleVideo = function() {
+                if (videoContainer.style.display === "none") {
+                    videoContainer.style.display = "block";
+                    videoPlayer.play();
+                } else {
+                    videoContainer.style.display = "none";
+                    videoPlayer.pause();
+                }
+            };
+
+            $scope.skip = function(seconds) {
+                videoPlayer.currentTime += seconds;
+            };
+
+            $scope.pauseVid = function() {
+                videoPlayer.pause();
+            };
+
+            $scope.playVid = function() {
+                videoPlayer.play();
+            };
+
+            $scope.restart = function() {
+                videoPlayer.currentTime = 0;
+            };
+        });
+    </script>
+</body>
+
+</html>

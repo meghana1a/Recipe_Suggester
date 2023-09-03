@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Digital Timer</title>
+</head>
+
+<body>
+    <h1 id="timer">00:00:00</h1>
+
+    <script>
+        // Get the timer element
+        const timerElement = document.getElementById('timer');
+
+        // Function to update the timer
+        function updateTimer() {
+            const currentDate = new Date();
+            const hours = currentDate.getHours().toString().padStart(2, '0');
+            const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+            const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+            const currentTime = `${hours}:${minutes}:${seconds}`;
+
+            // Update the timer element
+            timerElement.textContent = currentTime;
+        }
+
+        // Call the updateTimer function every second
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+
+</html>

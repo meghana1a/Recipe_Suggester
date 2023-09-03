@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>home</title>
+    <link rel="stylesheet" href="/public/home.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/home" ng-click="changePage('home.html')">Home</a></li>
+                <li><a href="/about" ng-click="changePage('about.html')">About</a></li>
+                <li><a href="sign.html">Newsletter</a></li>
+                <li><a href="/contact" ng-click="changePage('contact.html')">Contact</a></li>
+                <li><a href="/rotd" ng-click="changePage('rotd.html')">ROTD</a></li>
+                <li><a href="/notes" ng-click="changePage('notes.html')">Your Notes</a></li>
+            </ul>
+        </nav>
+    </header>
+    <center>
+        <h1><b>Recipe Generator</b></h1>
+    </center>
+
+    <br>
+    <center>
+        <svg width="600" height="400">
+  <image xlink:href="public/images/fridge.jpg" width="600" height="400" />
+  <a href="https://recipes.howstuffworks.com/5-savory-ketchup-based-sauces.htm">
+    <rect x="50" y="50" width="100" height="100" fill-opacity="0"/>
+  </a>
+</svg>
+    </center>
+
+    <h3><b><i><center>This website is a Recipe Generator. Select the ingredients you have at home and we'll find a recipe for you!</center></i></b></h3>
+
+    <center><button onclick="window.location.href='/main'">Go to Generator</button></center>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <br>
+    <hr>
+    <br>
+    <div>
+        <form name="myForm" onsubmit="return validateForm()">
+            <label for="find-us">How did you find us?</label>
+            <select id="find-us" name="find-us">
+      <option value="">--Please select--</option>
+      <option value="search-engine">Search engine</option>
+      <option value="social-media">Social media</option>
+      <option value="word-of-mouth">Word of mouth</option>
+      <option value="advertisement">Advertisement</option>
+      <option value="other">Other</option>
+    </select>
+            <br>
+            <label for="recommendation">How likely are you to recommend us to others?</label>
+            <select id="recommendation" name="recommendation">
+      <option value="">--Please select--</option>
+      <option value="very-likely">Very likely</option>
+      <option value="somewhat-likely">Somewhat likely</option>
+      <option value="neutral">Neutral</option>
+      <option value="somewhat-unlikely">Somewhat unlikely</option>
+      <option value="very-unlikely">Very unlikely</option>
+    </select>
+            <br>
+            <label for="experience">How was your experience with our website?</label>
+            <textarea id="experience" name="experience" rows="4" cols="50"></textarea>
+            <br>
+            <center><input type="submit" value="Submit"></center>
+        </form>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        app.controller('MyController', function($scope) {
+            $scope.currentPage = 'page1.html'; // Set the initial page
+
+            $scope.changePage = function(newPage) {
+                $scope.currentPage = newPage; // Change the current page
+            };
+        });
+
+        function validateForm() {
+            var findUs = document.forms["myForm"]["find-us"].value;
+            var recommendation = document.forms["myForm"]["recommendation"].value;
+            var experience = document.forms["myForm"]["experience"].value;
+
+            if (findUs == "") {
+                alert("Please select how you found us");
+                return false;
+            }
+            if (recommendation == "") {
+                alert("Please select how likely you are to recommend us");
+                return false;
+            }
+            if (experience == "") {
+                alert("Please tell us about your experience");
+                return false;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
